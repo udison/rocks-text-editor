@@ -17,7 +17,12 @@ pub fn handle_input(app: &mut App) -> Result<(), Error> {
 
 fn handle_key_press(app: &mut App, key: KeyEvent) {
     match key.code {
-        KeyCode::Char('q') => app.quit(),
+        KeyCode::Esc => app.quit(),
+        KeyCode::Char(char) => app.text.push(char),
+        KeyCode::Backspace => {
+            app.text.pop();
+        },
+        KeyCode::Enter => app.text.push('\n'),
 
         _ => {}
     }

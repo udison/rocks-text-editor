@@ -11,6 +11,7 @@ use crate::renderer;
 pub struct App {
     pub title: String,
     pub version: String,
+    pub text: String, // yes i know... relax
     
     running: bool,
 }
@@ -22,7 +23,8 @@ impl App {
         App {
             title: String::from("Rocks Text Editor"),
             version: String::from("v0.0.1"),
-            running: true
+            running: true,
+            text: String::from("")
         }
     }
 

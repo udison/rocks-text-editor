@@ -42,3 +42,11 @@ pub fn render_title_bar(frame: &mut Frame, app: &App, block: Rect) {
 
     frame.render_widget(title, block);
 }
+
+pub fn render_text_editor(frame: &mut Frame, app: &App, block: Rect) {
+    let text = Text::from(app.text.clone()).style(Style::default().fg(Color::White));
+    let text_widget = Paragraph::new(text)
+        .style(Style::default());
+
+    frame.render_widget(text_widget, block);
+}
