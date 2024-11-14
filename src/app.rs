@@ -3,7 +3,8 @@ use ratatui::crossterm::execute;
 use ratatui::crossterm::terminal::{enable_raw_mode, EnterAlternateScreen, disable_raw_mode, LeaveAlternateScreen};
 use ratatui::prelude::CrosstermBackend;
 use ratatui::Terminal;
-use std::io::{self, Error, Stdout};
+use std::fs::File;
+use std::io::{self, BufWriter, Error, Stdout, Write};
 
 use crate::input_handler::handle_input;
 use crate::renderer;
@@ -65,6 +66,14 @@ impl App {
         terminal.show_cursor()?;
 
         Ok(())
+    }
+
+    /// Saves a file containing the buffered text to the desired path
+    pub fn save(&self) -> Result<(), Error> {
+        let file = File::create("E:\\DEV\\rust\\text-editor\\target\\debug\\output\\output.txt")?;
+        let mut wbuf = BufWriter::new(file);
+    
+        wbuf.write_all(self.text.as_bytes())
     }
 
 }
