@@ -33,7 +33,7 @@ impl App {
     pub fn init() -> Result<Terminal<CrosstermBackend<Stdout>>, Error> {
         enable_raw_mode()?;
         let mut stdout = io::stdout();
-        execute!(stdout, EnterAlternateScreen, EnableMouseCapture)?;
+        execute!(stdout, EnterAlternateScreen)?;
         let backend = CrosstermBackend::new(stdout);
         
         Terminal::new(backend)
@@ -60,8 +60,7 @@ impl App {
         disable_raw_mode()?;
         execute!(
             terminal.backend_mut(),
-            LeaveAlternateScreen,
-            DisableMouseCapture
+            LeaveAlternateScreen
         )?;
         terminal.show_cursor()?;
 
@@ -70,7 +69,7 @@ impl App {
 
     /// Saves a file containing the buffered text to the desired path
     pub fn save(&self) -> Result<(), Error> {
-        let file = File::create("E:\\DEV\\rust\\text-editor\\target\\debug\\output\\output.txt")?;
+        let file = File::create("output.txt")?;
         let mut wbuf = BufWriter::new(file);
     
         wbuf.write_all(self.text.as_bytes())
