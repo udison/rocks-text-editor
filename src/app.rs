@@ -1,17 +1,19 @@
-use ratatui::crossterm::event::{DisableMouseCapture, EnableMouseCapture};
 use ratatui::crossterm::execute;
 use ratatui::crossterm::terminal::{enable_raw_mode, EnterAlternateScreen, disable_raw_mode, LeaveAlternateScreen};
 use ratatui::prelude::CrosstermBackend;
 use ratatui::Terminal;
 use std::fs::File;
 use std::io::{self, BufWriter, Error, Stdout, Write};
-
+use std::env::args;
+use std::path::{PathBuf};
+use std::fs;
 use crate::input_handler::handle_input;
 use crate::renderer;
 
 pub struct App {
     pub title: String,
     pub version: String,
+    pub current_file: PathBuf,
     pub text: String, // yes i know... relax
     
     running: bool,
@@ -21,16 +23,30 @@ impl App {
 
     /// Instantiate the app
     pub fn new() -> App {
+        let mut text = String::from("");
+        let current_file: PathBuf = if args().count() > 1  {
+            let path = PathBuf::from(args().nth(1).unwrap().as_str());
+
+            if path.is_file() {
+                text = fs::read_to_string(path.to_str().unwrap()).unwrap()
+            }
+
+            path
+        } else {
+            PathBuf::new()
+        };
+
         App {
             title: String::from("Rocks Text Editor"),
             version: String::from("v0.0.1"),
             running: true,
-            text: String::from("")
+            current_file,
+            text
         }
     }
 
     /// Setup and return the terminal
-    pub fn init() -> Result<Terminal<CrosstermBackend<Stdout>>, Error> {
+    pub fn init(&self) -> Result<Terminal<CrosstermBackend<Stdout>>, Error> {
         enable_raw_mode()?;
         let mut stdout = io::stdout();
         execute!(stdout, EnterAlternateScreen)?;
