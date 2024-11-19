@@ -17,6 +17,7 @@ pub struct App {
     pub text: String, // yes i know... relax
     
     running: bool,
+    current_file_path: String,
 }
 
 impl App {
@@ -24,11 +25,13 @@ impl App {
     /// Instantiate the app
     pub fn new() -> App {
         let mut text = String::from("");
+        let mut current_file_path = String::from("");
         let current_file: PathBuf = if args().count() > 1  {
             let path = PathBuf::from(args().nth(1).unwrap().as_str());
 
             if path.is_file() {
-                text = fs::read_to_string(path.to_str().unwrap()).unwrap()
+                current_file_path = String::from(path.to_str().unwrap());
+                text = fs::read_to_string(current_file_path.clone()).unwrap()
             }
 
             path
@@ -39,9 +42,11 @@ impl App {
         App {
             title: String::from("Rocks Text Editor"),
             version: String::from("v0.0.1"),
-            running: true,
             current_file,
-            text
+            text,
+
+            running: true,
+            current_file_path
         }
     }
 
@@ -89,6 +94,10 @@ impl App {
         let mut wbuf = BufWriter::new(file);
     
         wbuf.write_all(self.text.as_bytes())
+    }
+
+    pub fn get_current_file_path(&self) -> String {
+        self.current_file_path.clone()
     }
 
 }
