@@ -290,6 +290,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "rocks"
+version = "0.1.0"
+dependencies = [
+ "ratatui",
+]
+
+[[package]]
 name = "rustix"
 version = "0.38.40"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -393,13 +400,6 @@ dependencies = [
  "proc-macro2",
  "quote",
  "unicode-ident",
-]
-
-[[package]]
-name = "text-editor"
-version = "0.1.0"
-dependencies = [
- "ratatui",
 ]
 
 [[package]]

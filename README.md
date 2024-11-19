@@ -1,6 +1,6 @@
 ﻿# Rocks Text Editor
 
-A simple TUI text editor made in Rust using [Ratatui](https://ratatui.rs/).
+Rocks is a simple TUI text editor made in Rust using [Ratatui](https://ratatui.rs/).
 
 ## Roadmap
 
@@ -23,11 +23,11 @@ Rocks is a terminal-based text editor, in order to run it you need to run:
 
 Windows:
 
-```./text-editor.exe [PATH_TO_FILE]```
+```./rocks.exe [PATH_TO_FILE]```
 
 Linux:
 
-```text-editor [PATH_TO_FILE]```
+```rocks [PATH_TO_FILE]```
 
 ## Building
 
