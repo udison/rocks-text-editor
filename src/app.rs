@@ -10,6 +10,7 @@ use std::env::args;
 use std::fs;
 use std::io::{self, Error, Stdout};
 use std::path::PathBuf;
+use crate::cursor::Cursor;
 
 pub struct App {
     pub title: String,
@@ -17,6 +18,7 @@ pub struct App {
     pub current_file: PathBuf,
     pub text: String, // yes i know... relax
     pub modified: bool,
+    pub cursor: Cursor,
 
     running: bool,
     current_file_path: String,
@@ -46,6 +48,7 @@ impl App {
             current_file,
             text,
             modified: false,
+            cursor: Cursor::new(),
 
             running: true,
             current_file_path,

@@ -1,9 +1,10 @@
 mod app;
 mod buffer_handler;
-mod file_manipulation;
+mod file_handler;
 mod input_handler;
 mod renderer;
 mod ui;
+mod cursor;
 
 use app::App;
 use std::error::Error;

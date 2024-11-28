@@ -1,7 +1,7 @@
 use std::rc::Rc;
 
 use crate::app::App;
-use crate::file_manipulation::get_language_from_filename;
+use crate::file_handler::get_language_from_filename;
 use ratatui::layout::Alignment;
 use ratatui::{
     layout::{Constraint, Direction, Layout, Rect},
@@ -15,7 +15,7 @@ pub fn app_layout(frame: &mut Frame) -> Rc<[Rect]> {
     Layout::default()
         .direction(Direction::Vertical)
         .constraints([
-            Constraint::Length(2), // Titlebar
+            // Constraint::Length(1), // Titlebar
             Constraint::Min(7),    // Editor
             Constraint::Length(1), // Footer
         ])
@@ -23,9 +23,7 @@ pub fn app_layout(frame: &mut Frame) -> Rc<[Rect]> {
 }
 
 pub fn render_title_bar(frame: &mut Frame, app: &App, block: Rect) {
-    let title_block = Block::default()
-        .borders(Borders::BOTTOM)
-        .style(Style::default());
+    let title_block = Block::default().style(Style::default());
 
     let app_name = Span::styled(app.title.clone() + " ", Style::default().fg(Color::Black));
     let version = Span::styled(app.version.clone(), Style::default().fg(Color::DarkGray));
@@ -42,6 +40,10 @@ pub fn render_text_editor(frame: &mut Frame, app: &App, block: Rect) {
     let text_widget = Paragraph::new(text).style(Style::default());
 
     frame.render_widget(text_widget, block);
+}
+
+pub fn render_cursor(frame: &mut Frame, app: &App) {
+    frame.set_cursor_position(app.cursor.position)
 }
 
 pub fn render_footer(frame: &mut Frame, app: &App, block: Rect) {
