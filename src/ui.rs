@@ -36,14 +36,16 @@ pub fn render_title_bar(frame: &mut Frame, app: &App, block: Rect) {
 }
 
 pub fn render_text_editor(frame: &mut Frame, app: &App, block: Rect) {
-    let text = Text::from(app.text.clone()).style(Style::default().fg(Color::White));
+    // app.text.clone() TODO: put text back on line below
+    let text =
+        Text::from(app.buffer_handler.add_buffer.clone()).style(Style::default().fg(Color::White));
     let text_widget = Paragraph::new(text).style(Style::default());
 
     frame.render_widget(text_widget, block);
 }
 
 pub fn render_cursor(frame: &mut Frame, app: &App) {
-    frame.set_cursor_position(app.cursor.position)
+    frame.set_cursor_position(app.buffer_handler.cursor.position)
 }
 
 pub fn render_footer(frame: &mut Frame, app: &App, block: Rect) {

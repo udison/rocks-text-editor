@@ -1,3 +1,5 @@
+use crate::buffer_handler::BufferHandler;
+use crate::cursor::Cursor;
 use crate::input_handler::handle_input;
 use crate::renderer;
 use ratatui::crossterm::execute;
@@ -10,15 +12,13 @@ use std::env::args;
 use std::fs;
 use std::io::{self, Error, Stdout};
 use std::path::PathBuf;
-use crate::cursor::Cursor;
 
 pub struct App {
     pub title: String,
     pub version: String,
     pub current_file: PathBuf,
-    pub text: String, // yes i know... relax
+    pub buffer_handler: BufferHandler,
     pub modified: bool,
-    pub cursor: Cursor,
 
     running: bool,
     current_file_path: String,
@@ -34,7 +34,7 @@ impl App {
 
             if path.is_file() {
                 current_file_path = String::from(path.to_str().unwrap());
-                text = fs::read_to_string(current_file_path.clone()).unwrap()
+                text = fs::read_to_string(&current_file_path).unwrap();
             }
 
             path
@@ -46,9 +46,8 @@ impl App {
             title: String::from("Rocks Text Editor"),
             version: String::from("v0.0.1"),
             current_file,
-            text,
+            buffer_handler: BufferHandler::from(text),
             modified: false,
-            cursor: Cursor::new(),
 
             running: true,
             current_file_path,
